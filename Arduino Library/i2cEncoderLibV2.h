@@ -199,7 +199,20 @@ class i2cEncoderLibV2
     void writeGP1conf(uint8_t gp1);
     void writeGP2conf(uint8_t gp2);
     void writeGP3conf(uint8_t gp3);
-    void writeInterruptConfig(uint8_t interrupt);
+
+    typedef enum {
+        S_NONE  = 0x0,
+    	S_PUSHR = 0x01,	//  irq on click
+    	S_PUSHP = 0x02, // irq on push down (and keep it there shortly)
+    	S_PUSHD = 0x04, // irq on double click
+    	S_RINC  = 0x08,  // irq on incrementing rotate
+    	S_RDEC  = 0x10,  // irq on decrementing rotate
+    	S_RMAX  = 0x20,  // irq on max reached.
+    	S_RMIN  = 0x40,  // irq on max reached.
+    	S_INT2  = 0x80,  // irq on int2
+        S_ALL   = 0xFF,
+    } irqMask;
+    void writeInterruptConfig(uint8_t interruptMask);
 
     /** Encoder functions **/
     void writeCounter(int32_t counter);
